@@ -34,10 +34,8 @@ echo "Installing additional necessary packages..."
 yum install -y vim net-tools bind-utils
 
 # Ensure wheel group can use sudo without a password
-if ! grep -q "%wheel ALL=(ALL) NOPASSWD: ALL" /etc/sudoers.d/wheel-nopasswd 2>/dev/null; then
-    echo "Configuring sudo access for the wheel group..."
-    echo '%wheel ALL=(ALL) NOPASSWD: ALL' | visudo -f /etc/sudoers.d/wheel-nopasswd
-fi
+echo "Configuring sudo access for the wheel group..."
+echo '%wheel ALL=(ALL) NOPASSWD: ALL' | visudo -f /etc/sudoers.d/wheel-nopasswd
 
 # Validate sudo configuration
 echo "Validating sudo configuration..."
