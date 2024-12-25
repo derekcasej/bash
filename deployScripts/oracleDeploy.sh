@@ -7,22 +7,12 @@ echo "Starting configuration..."
 
 # Install EPEL repository
 echo "Installing EPEL repository..."
-yum install -y epel-release
+yum install -y oracle-epel-release-el7
 
 # Download Remi repository RPM
 if [ ! -f /tmp/remi-release-7.rpm ]; then
     echo "Downloading Remi repository RPM..."
     curl -o /tmp/remi-release-7.rpm https://rpms.remirepo.net/enterprise/remi-release-7.rpm
-fi
-
-# Install Remi repository RPM
-echo "Installing Remi repository RPM..."
-yum install -y /tmp/remi-release-7.rpm
-
-# Validate Remi repository installation
-if ! yum repolist enabled | grep remi > /dev/null; then
-    echo "Remi repository is not properly configured."
-    exit 1
 fi
 
 # Update all packages
