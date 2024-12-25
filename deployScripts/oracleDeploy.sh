@@ -28,7 +28,7 @@ echo "Installing additional necessary packages..."
 yum install -y vim net-tools bind-utils
 
 # Uncomment the NOPASSWD line for the wheel group in /etc/sudoers
-sed -i '/^# %wheel ALL=(ALL) NOPASSWD: ALL/s/^#//' /etc/sudoers
+sed -i '/^# %wheel        ALL=(ALL)       NOPASSWD: ALL/s/^#//' /etc/sudoers
 
 # Ensure SSH service is running and enabled
 echo "Ensuring SSH service is running and enabled..."
