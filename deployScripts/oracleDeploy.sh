@@ -33,9 +33,8 @@ yum groupinstall -y "Development Tools"
 echo "Installing additional necessary packages..."
 yum install -y vim net-tools bind-utils
 
-# Ensure wheel group can use sudo without a password
-echo "Configuring sudo access for the wheel group..."
-echo '%wheel ALL=(ALL) NOPASSWD: ALL' | visudo -f /etc/sudoers.d/wheel-nopasswd
+# Uncomment the NOPASSWD line for the wheel group in /etc/sudoers
+sed -i '/^#%wheel ALL=(ALL) NOPASSWD: ALL/s/^#//' /etc/sudoers
 
 # Validate sudo configuration
 echo "Validating sudo configuration..."
@@ -50,6 +49,7 @@ systemctl start sshd
 systemctl enable sshd
 
 # Verify Derek user can run sudo without password
+echo "Verifying Derek user can run sudo without password..."
 sudo -n true 2>/dev/null && echo "Passwordless sudo works" || echo "Passwordless sudo does not work"
 
 echo "Configuration complete."
