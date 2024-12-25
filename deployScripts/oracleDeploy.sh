@@ -9,12 +9,6 @@ echo "Starting configuration..."
 echo "Installing EPEL repository..."
 yum install -y oracle-epel-release-el7
 
-# Download Remi repository RPM
-if [ ! -f /tmp/remi-release-7.rpm ]; then
-    echo "Downloading Remi repository RPM..."
-    curl -o /tmp/remi-release-7.rpm https://rpms.remirepo.net/enterprise/remi-release-7.rpm
-fi
-
 # Update all packages
 echo "Updating all packages..."
 yum update -y
@@ -34,14 +28,7 @@ echo "Installing additional necessary packages..."
 yum install -y vim net-tools bind-utils
 
 # Uncomment the NOPASSWD line for the wheel group in /etc/sudoers
-sed -i '/^#%wheel ALL=(ALL) NOPASSWD: ALL/s/^#//' /etc/sudoers
-
-# Validate sudo configuration
-echo "Validating sudo configuration..."
-if ! visudo -c 2>/dev/null; then
-    echo "Invalid sudo configuration detected."
-    exit 1
-fi
+sed -i '/^# %wheel ALL=(ALL) NOPASSWD: ALL/s/^#//' /etc/sudoers
 
 # Ensure SSH service is running and enabled
 echo "Ensuring SSH service is running and enabled..."
@@ -50,6 +37,7 @@ systemctl enable sshd
 
 # Verify Derek user can run sudo without password
 echo "Verifying Derek user can run sudo without password..."
+
 sudo -n true 2>/dev/null && echo "Passwordless sudo works" || echo "Passwordless sudo does not work"
 
 echo "Configuration complete."
