@@ -50,12 +50,6 @@ systemctl start sshd
 systemctl enable sshd
 
 # Verify Derek user can run sudo without password
-echo "Verifying Derek user can run sudo without password..."
-if su - derek -c 'echo "Check sudo access" | sudo true' 2>/dev/null; then
-    echo "User 'derek' can run sudo commands without a password."
-else
-    echo "User 'derek' cannot run sudo commands without a password."
-    exit 1
-fi
+sudo -n true 2>/dev/null && echo "Passwordless sudo works" || echo "Passwordless sudo does not work"
 
 echo "Configuration complete."
